@@ -20,13 +20,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-async def startup():
-    r = redis.Redis(host='localhost', port=6379, db=0, encoding='utf-8', decode_responses=True)
-    await FastAPILimiter.init(r)
+# @app.on_event("startup")
+# async def startup() -> None:
+#     """
+#     The startup function is called when the application starts up.
+#     It's a good place to initialize things that are needed by your app, like database connections or caches.
+    
+#     :return: None
+#     """
+#     r = redis.Redis(host='localhost', port=6379, db=0, encoding='utf-8', decode_responses=True)
+#     await FastAPILimiter.init(r)
 
 @app.get("/")
 async def read_root():
+    """
+    The read_root function returns a JSON object with the message: Hello World.
+    
+    :return: A dict
+    """
     return {"message": "Hello World"}
 
 # start server, main:app - name of the file and app - Fastapi, reload=True - for authomatical reload

@@ -22,7 +22,20 @@ conf = ConnectionConfig(
 )
 
 
-async def send_email(email: EmailStr, username: str, host: str):
+async def send_email(email: EmailStr, username: str, host: str) -> None:
+    """
+    The send_email function sends an email to the user with a link to confirm their email address.
+
+        The function takes in three arguments:
+            email: the user's email address, which is used as a unique identifier for them.
+            username: the username of the user who is registering for an account. 
+            host: this is where we are hosting our application, which will be used as part of our URL when sending out emails.
+    
+    :param email: EmailStr: Validate the email address
+    :param username: str: Pass the username to the email template
+    :param host: str: Pass the hostname of the server to be used in the link for email verification
+    :return: None
+    """
     try:
         token_verification = await service_auth.create_email_token({"sub": email})
         message = MessageSchema(
@@ -38,7 +51,19 @@ async def send_email(email: EmailStr, username: str, host: str):
         print(err)
 
 
-async def send_reset_password_email(email: EmailStr, username: str, host: str):
+async def send_reset_password_email(email: EmailStr, username: str, host: str) -> None:
+    """
+    The send_reset_password_email function sends an email to the user with a link to reset their password.
+        Args:
+            email (str): The user's email address.
+            username (str): The user's username.
+            host (str): The hostname of the server where this function is being called from, e.g., &quot;localhost&quot; or &quot;127.0.0.&quot; 
+    
+    :param email: EmailStr: Specify the email address of the user who is requesting a password reset
+    :param username: str: Pass the username to the template, so it can be displayed in the email
+    :param host: str: Pass the hostname of the server to the email template
+    :return: None
+    """
     try:
         token_verification = await service_auth.create_email_token({"sub": email})
         message = MessageSchema(
